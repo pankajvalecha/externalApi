@@ -1,0 +1,155 @@
+{
+ "meta": {
+  "creator": "cds-dk 8.4.2"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "SystemConfigurationService.BusinessSystems": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "id": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "doc": "Unique, technical identifier of the business system",
+     "@Core.Computed": true,
+     "@UI.HiddenFilter": true
+    },
+    "systemId": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 100,
+     "notNull": true
+    },
+    "destination": {
+     "type": "cds.String",
+     "length": 255
+    },
+    "isActive": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "default": {
+      "val": true
+     }
+    },
+    "createdOn": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@Core.Immutable": true,
+     "@UI.HiddenFilter": true,
+     "@Common.Label": "Created On"
+    },
+    "changedOn": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@Core.Computed": true,
+     "@UI.HiddenFilter": true,
+     "@Common.Label": "Changed On"
+    },
+    "toSystemObjects": {
+     "type": "cds.Composition",
+     "target": "SystemConfigurationService.SystemObjects",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "toSystemTypes": {
+     "type": "cds.Association",
+     "target": "SystemConfigurationService.SystemTypes",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "toSystemTypes_ID": {
+     "type": "cds.String",
+     "length": 36,
+     "notNull": true
+    }
+   },
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "SystemConfigurationService.SystemObjects": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "objectId": {
+     "key": true,
+     "type": "cds.String",
+     "length": 36,
+     "notNull": true
+    },
+    "objectName": {
+     "type": "cds.String",
+     "length": 255
+    },
+    "isActive": {
+     "type": "cds.Boolean"
+    },
+    "destination": {
+     "type": "cds.String",
+     "length": 255
+    },
+    "systemId": {
+     "type": "cds.String",
+     "length": 30,
+     "notNull": true
+    },
+    "systemType_ID": {
+     "key": true,
+     "type": "cds.String",
+     "length": 36,
+     "notNull": true
+    },
+    "businessSystemId": {
+     "key": true,
+     "type": "cds.String",
+     "length": 50,
+     "notNull": true
+    }
+   },
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "SystemConfigurationService.SystemTypes": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.String",
+     "length": 36,
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "notNull": true
+    }
+   },
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "SystemConfigurationService": {
+   "kind": "service",
+   "@cds.external": true,
+   "doc": "System Configuration Service\n\nThis API allows you to view the the details of configured external business systems of below mentioned types in the collaboration owner tenant and also the object types that are relevant for those system types."
+  }
+ }
+}
